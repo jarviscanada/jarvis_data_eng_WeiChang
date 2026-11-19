@@ -131,3 +131,12 @@ Stores resource usage measurements collected from each machine.
 | disk_io | INT4 | Disk I/O |
 | disk_available | INT4 | Available disk space in MB |
 
+
+# Test
+
+Scripts were tested manually on a Linux host against the Dockerized PostgreSQL instance.
+
+- **psql_docker.sh:** ran `create`, `stop` and `start`, then confirmed the container status with `docker ps -a`. Also ran it with missing arguments and an invalid command to check the error handling.
+- **ddl.sql:** ran it twice to confirm `IF NOT EXISTS` makes it safe to re-run, then checked the tables with `\dt`.
+- **host_info.sh and host_usage.sh:** ran each with valid and invalid arguments, then checked the inserted rows with `SELECT * FROM host_info;` and `SELECT * FROM host_usage;`.
+- **Crontab:** waited a few minutes and confirmed that a new `host_usage` row appeared every two minutes.
